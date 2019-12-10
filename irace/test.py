@@ -133,24 +133,43 @@ if __name__ == '__main__':
 
     print(mean_best_fitness[-1])
 
-    if args.show:
-        fig = plt.figure()
-        fig.suptitle('%s: best fitness' % label)
-        plt.plot(results[1], mean_best_fitness, label=label)
-        plt.legend(loc=1)
-        plt.show()
+    # --------------------- Natalie
+
+
+
+    partial_fitness = results[3] # pega o partial_fitness_array
+
+    print(partial_fitness.shape) # retorna a dimensão do array: (nº de execuções, nº de alunos, nº de iterações, nº de fc de fitness)
+
+    # retorna o resultado das funções de fitness para o aluno 1 [cobertura de conceitos, dificuldade, tempo total, distribuição dos materiais, estilo de aprendizagem]
+    student_partial_fitness = partial_fitness[:, 0, -1, :] #seleciona o aluno 1 e a última (a melhor) interação (-1)
+
+    # retorna a avaliação da sequência para o aluno 1
+    print(np.sum(student_partial_fitness, axis=1)) #dentre os dois eixos que fora ignorados antes pelo : é feito o somatório do segundo, o das funções de fitness
+
+
+
+    # ---------------------- End Natalie
+
 
     # if args.show:
     #     fig = plt.figure()
     #     fig.suptitle('%s: best fitness' % label)
-    #     plt.plot(results[0], mean_best_fitness, label="Total")
-    #     plt.plot(results[0], mean_partial_fitness[:, 0], label="Coverage")
-    #     plt.plot(results[0], mean_partial_fitness[:, 1], label="Difficulty")
-    #     plt.plot(results[0], mean_partial_fitness[:, 2], label="Time")
-    #     plt.plot(results[0], mean_partial_fitness[:, 3], label="Balance")
-    #     plt.plot(results[0], mean_partial_fitness[:, 4], label="Style")
+    #     plt.plot(results[1], mean_best_fitness, label=label)
     #     plt.legend(loc=1)
     #     plt.show()
+
+    if args.show:
+        fig = plt.figure()
+        fig.suptitle('%s: best fitness' % label)
+        plt.plot(results[1], mean_best_fitness, label="Total")
+        plt.plot(results[1], mean_partial_fitness[:, 0], label="Coverage")
+        plt.plot(results[1], mean_partial_fitness[:, 1], label="Difficulty")
+        plt.plot(results[1], mean_partial_fitness[:, 2], label="Time")
+        plt.plot(results[1], mean_partial_fitness[:, 3], label="Balance")
+        plt.plot(results[1], mean_partial_fitness[:, 4], label="Style")
+        plt.legend(loc=1)
+        plt.show()
 
     # temp = results[3].mean(axis=0)
     # for i in range(24):
