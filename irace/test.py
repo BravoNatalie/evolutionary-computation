@@ -135,7 +135,8 @@ if __name__ == '__main__':
 
     # --------------------- Natalie
 
-
+     #para executar:
+     #python3  -m irace.test pso 0 0 0 instances/real/test_instance.txt -b 100000
 
     partial_fitness = results[3] # pega o partial_fitness_array
 
@@ -144,10 +145,22 @@ if __name__ == '__main__':
     # retorna o resultado das funções de fitness para o aluno 1 [cobertura de conceitos, dificuldade, tempo total, distribuição dos materiais, estilo de aprendizagem]
     student_partial_fitness = partial_fitness[:, 0, -1, :] #seleciona o aluno 1 e a última (a melhor) interação (-1)
 
+    print(partial_fitness[:, 0, -1, :][0])
+
     # retorna a avaliação da sequência para o aluno 1
-    print(np.sum(student_partial_fitness, axis=1)) #dentre os dois eixos que fora ignorados antes pelo : é feito o somatório do segundo, o das funções de fitness
+    #print(np.sum(student_partial_fitness, axis=1)) #dentre os dois eixos que fora ignorados antes pelo : é feito o somatório do segundo, o das funções de fitness
 
+    ######################### 
 
+    student_fitnessFunction = list()
+
+    for student in range(24):
+        fitnessFuntion_Value = partial_fitness[:, student, -1, :][0]
+        fitnessFuntion_Value = np.append(fitnessFuntion_Value,  np.sum(fitnessFuntion_Value))
+        #print(fitnessFuntion_Value)
+        student_fitnessFunction.append(fitnessFuntion_Value)
+
+    np.savetxt("student_fitnessFunction.txt", student_fitnessFunction, fmt="%s")
 
     # ---------------------- End Natalie
 
